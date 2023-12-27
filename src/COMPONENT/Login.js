@@ -10,14 +10,12 @@ import { auth } from './firebase'
 function Login() {
     const [fitH, setfitH] = useState(false)
     const { register, handleSubmit ,reset , formState: { errors }  } = useForm();
-    const [ress,setress]=useState(0);
+    const [ress,setress]=useState('');
     const navigate = useNavigate();
     
     const onSubmit = async(data) => {
         console.log('Form submitted successfully:', data);
-        // axios.post('http://localhost:2001/api/v1/user/login',data)
-        // .then(res=>setress(res))
-        // .catch(err=>console.log(err))
+       
         
 
         try{
@@ -27,11 +25,11 @@ function Login() {
 
             localStorage.setItem('token',user.accessToken);
             localStorage.setItem('user',JSON.stringify(user));
-            navigate('/food',{state:"shajith"})
+            navigate('/food',{state:data.email.charAt(0)})
             
         }
         catch (error){
-            console.log(error)
+            setress(error.message)
         }
         reset();
       
@@ -62,6 +60,7 @@ function Login() {
                             <input {...register('password', { required: 'Password is required', minLength: { value: 8, message: 'Password must be at least 8 characters long' } })} type="password" placeholder="Enter Your Password" />
                             <img src={myimage2} alt='PasswordImage' className='innerinput-img' />
                             {errors.password && <p>{errors.password.message}</p>}
+                            {ress && <span className='invalid'>Invalid Email or Password </span>}
                         </div>
 
                         <input type="submit" value={"Login"} style={{ backgroundColor: "white", color: "black", width: "220px", marginTop: "35px" }} />

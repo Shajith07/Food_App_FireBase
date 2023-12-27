@@ -12,15 +12,12 @@ import {  createUserWithEmailAndPassword } from 'firebase/auth'
 function SiginUp() {
     const [fitH, setfitH] = useState(false)
     const { register, handleSubmit , reset , formState: { errors }  } = useForm();
-    const [ress,setress]=useState(0);
     const navigate = useNavigate();
 
 
     const onSubmit = async (data) => {
         console.log('Form submitted successfully:', data);
-        // axios.post('http://localhost:2001/api/v1/user/createUser',data)
-        // .then(res=>setress(res.status))
-        // .catch(err=>console.log(err)) 
+       
       try{
         const userCredential = await createUserWithEmailAndPassword(auth,data.email,data.password,data.name)
         const user =userCredential.user
@@ -49,7 +46,7 @@ function SiginUp() {
    
 
  
-   },[errors.name,errors.password,errors.email,ress,navigate])
+   },[errors.name,errors.password,errors.email,navigate])
     return (
         <div className='container' >
             <div className='startingd' style={{ height: fitH ? "480px" : "325px" }}>
