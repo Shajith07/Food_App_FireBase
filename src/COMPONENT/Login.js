@@ -22,10 +22,11 @@ function Login() {
             const userCredential = await signInWithEmailAndPassword(auth,data.email,data.password)
             const user =userCredential.user
             console.log(userCredential)
+            
 
             localStorage.setItem('token',user.accessToken);
             localStorage.setItem('user',JSON.stringify(user));
-            navigate('/food',{state:data.email.charAt(0)})
+            navigate('/food',{state:user.displayName})
             
         }
         catch (error){

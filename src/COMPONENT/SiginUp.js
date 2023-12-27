@@ -7,7 +7,7 @@ import myimage2 from "./Assest/password.png"
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import { auth } from './firebase'
-import {  createUserWithEmailAndPassword } from 'firebase/auth'
+import {  createUserWithEmailAndPassword ,updateProfile} from 'firebase/auth'
 
 function SiginUp() {
     const [fitH, setfitH] = useState(false)
@@ -19,8 +19,10 @@ function SiginUp() {
         console.log('Form submitted successfully:', data);
        
       try{
-        const userCredential = await createUserWithEmailAndPassword(auth,data.email,data.password,data.name)
+        const userCredential = await createUserWithEmailAndPassword(auth,data.email,data.password)
         const user =userCredential.user
+
+        await updateProfile(user, { displayName: data.name});
         console.log(userCredential)
         console.log(user)
    
@@ -70,7 +72,7 @@ function SiginUp() {
                             <img src={myimage2} alt='PasswordImage' className='innerinput-img' />
                             {errors.password && <p>{errors.password.message}</p>}
                         </div>
-                        <input type="submit" value={"SignUP"} style={{ backgroundColor: "white", color: "black", width: "220px", marginTop: "35px" }} />
+                        <input type="submit" value={"SignUp"} style={{ backgroundColor: "white", color: "black", width: "220px", marginTop: "35px" }} />
                    <div style={
                     {color:"white",marginTop:'20px',fontSize:'15px',marginLeft:'15px'}
                    }>Do You Have Accout?<span style={{cursor:'pointer'}}><Link to={'/'} style={{color:'red',textDecoration:'none'}}>Login</Link></span> </div>
