@@ -1,0 +1,89 @@
+.container{
+    background-image: url("Assest/login-bg.png");
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-repeat: no-repeat; 
+}
+.formname{
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    color: white;
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+.startingd{
+    border: white 2px solid;
+    border-radius: 20px;
+    width: 270px;
+}
+.formstart{
+    margin-left: 25px;
+
+}
+.formstart input{
+    border-radius: 15px;
+    border: solid 1px white;
+    margin-top: 15px;
+    width: 200px;
+    padding: 10px;
+    
+}
+.inner-form{
+    position: relative;
+}
+.innerinput-img{
+    position: absolute;
+    right:30px;
+    top:19px;
+}
+
+/* Media Query for Tablets */
+@media screen and (max-width: 768px) {
+    .container {
+        height: auto;
+    }
+
+    .startingd {
+        width: 100%;
+    }
+
+    .formstart {
+        margin-left: 0;
+    }
+
+    .formstart input {
+        width: 100%;
+    }
+
+    .innerinput-img {
+        right: 20px;
+    }
+}
+
+/* Media Query for Mobile Devices */
+@media screen and (max-width: 480px) {
+    .container {
+        height: auto;
+    }
+
+    .startingd {
+        width: 100%;
+    }
+
+    .formstart {
+        margin-left: 0;
+    }
+
+    .formstart input {
+        width: 100%;
+    }
+
+    .innerinput-img {
+        display: none; /* Hide the innerinput-img on smaller screens if needed */
+    }
+}
