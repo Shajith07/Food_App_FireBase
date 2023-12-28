@@ -10,6 +10,7 @@ import { auth } from './firebase'
 
 function Login() {
     const [fitH, setfitH] = useState(false)
+    const [showPassword, setShowPassword] = useState(false);
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
     const [ress, setress] = useState('');
     const navigate = useNavigate();
