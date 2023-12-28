@@ -65,7 +65,7 @@ function Login() {
 
                         <div className='inner-form'>
                             <input {...register('password', { required: 'Password is required', minLength: { value: 8, message: 'Password must be at least 8 characters long' } })} type={showPassword ? 'text' : 'password'} placeholder="Enter Your Password" />
-                            <img src={showPassword ? myimage2 : myimage3 /* replace myimage2 with your open and close eye icons */}
+                            <img src={showPassword ? myimage2 : myimage3 }
                                 alt='PasswordImage'
                                 className='innerinput-img'
                                 onClick={handleTogglePassword} /> {errors.password && <p>{errors.password.message}</p>}
