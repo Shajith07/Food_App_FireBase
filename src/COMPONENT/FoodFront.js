@@ -96,7 +96,7 @@ function FoodFront() {
     const searchs = () => {
         if (datas.firstLetter) {
             setdatas((prev) => ({
-                ...prev, searched: true,addclick:false
+                ...prev, searched: true, addclick: false
             }))
         }
 
@@ -123,24 +123,24 @@ function FoodFront() {
         }))
     }
 
-    const addCart = (price, image, name) => {   
+    const addCart = (price, image, name) => {
         const existingProductIndex = datas.addcartproduct.findIndex(
             (product) => product.name === name
         );
-    
+        console.log(existingProductIndex)
         if (existingProductIndex !== -1) {
-            // Product already exists in the cart, update the count
+            // Product already exists in the cart, increase the count
             const updatedCartProduct = [...datas.addcartproduct];
             updatedCartProduct[existingProductIndex].count += 1;
-    
+
             setdatas((prev) => ({
                 ...prev,
                 addcartproduct: updatedCartProduct,
             }));
         } else {
-            // Product does not exist in the cart, add a new entry
+            // Product does not exist in the cart, add a new 
             const newCartProduct = [...datas.addcartproduct, { price, image, name, count: 1 }];
-    
+
             setdatas((prev) => ({
                 ...prev,
                 addcartproduct: newCartProduct,
@@ -150,7 +150,7 @@ function FoodFront() {
 
     const showaddcart = () => {
         setdatas((prev) => ({
-            ...prev, addclick: true, homeclick: false, categoryClicked: false,searched:false
+            ...prev, addclick: true, homeclick: false, categoryClicked: false, searched: false
         }))
         setSelectedCuisine(null)
     }
@@ -178,6 +178,7 @@ function FoodFront() {
         setdatas({ ...datas, addcartproduct: newCartProduct });
     }
 
+    // To get data from api
     useEffect(() => {
         axios.get("https://www.themealdb.com/api/json/v1/1/categories.php")
             .then(res => { const responsedata = Array.isArray(res?.data?.categories) ? res?.data?.categories : []; setdatas((prev) => ({ ...prev, categorydata: responsedata })) })
@@ -216,24 +217,24 @@ function FoodFront() {
                             <li>Veg</li>
                             <li>Non-Veg</li>
                             <li style={{ borderBottom: 'none' }}>
-                                <p className='logout' onClick={logout}>
-                                    Logout
-                                </p>
+
+                                <div className='image-name'>
+                                    <Avatar
+                                        name={name.state}
+                                        round={true}
+                                        size="35"
+                                        className='round-image'
+                                    />
+                                </div>
+                                 <p className='logout' onClick={logout}> Logout
+                                    </p>
+
                                 <img onClick={logout} width="20" className='logout-1' height="20" src="https://img.icons8.com/fluency-systems-regular/20/exit--v1.png" alt="logout" />
                             </li>
                         </ul>
                     </div>
                 </div>
                 <div className='cmpyname'>🍽️TNBP</div>
-                <div className='image-name'>
-                    <Avatar
-                        name={name.state}
-                        round={true}
-                        size="35"
-                        className='round-image'
-                    />    {name.state}
-                </div>
-
                 <p className='addcarts' onClick={showaddcart}>Add to Cart</p>
 
             </div>
@@ -256,6 +257,8 @@ function FoodFront() {
                 <p className='fa-below'>What are your favorite cuisines?</p>
                 <p className='fa-below-1'>PERSONALIZE YOUR EXPERIENCE</p>
             </div>
+
+            {/* Meal Based On Country */}
             {
                 selectedCuisine ? <div className='category-heading'>
                     <p className='category-name'>Meals Based On {selectedCuisine}</p>
@@ -274,9 +277,11 @@ function FoodFront() {
                 </div> : <div></div>
             }
 
+
+            {/* Meal Based On Search */}
             {
                 datas.searched ? <div className='category-heading'>
-                    <p className='category-name'>meals</p>
+                    <p className='category-name'>Meals</p>
                     <p className='category-name-below'></p>
                     <div className='category-diplay'>
                         {datas.categorysearchdata?.map((item, index) => (
@@ -291,6 +296,8 @@ function FoodFront() {
                     </div>
                 </div> : <div></div>
             }
+
+            {/* Categories */}
             {
                 datas.homeclick ?
                     <div className='category-heading'>
@@ -308,6 +315,8 @@ function FoodFront() {
                         </div>
                     </div> : <div></div>
             }
+
+            {/* Show Inside Category data */}
             {
                 datas.categoryClicked ? <div className='category-heading'>
                     <img className='home-icon' src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAzUlEQVR4nO3TMUoDQRQG4M80ok3Awl4bvYFVeqts5REsbVPbCLbeQRG2yCFSBI+QxgNY2BisEtiw8AbWZV3jriCCD34Y5s18xRuGX6qjyI/UOd7wjnFf7BIrFJE1rrpAO7iuQPXcYbAttovHFixlir2vsAPMtsBSnnD4GXaMxTewlGec1LEzvHTAisgrRgkbYtkDKyLLsD5U3gHK2x6lCZzHfh7r3uBFpV+u/0GtM3xomFFW6WcN/fs28BQ3uI1Mav91P/ZSvzxb3vlDtQFfyKNgQZ1oBQAAAABJRU5ErkJggg==" alt='home-icon' onClick={homeChange} />
@@ -322,13 +331,14 @@ function FoodFront() {
                                 <div className="box-content">
                                     <h3 className="box-title">{item.strMeal}</h3>
                                 </div>
-                                <p style={{ marginLeft: '10px', color: 'black' }}>₹ {item.idMeal - randomSubtraction}<span className='addtocartpro'  onClick={() => addCart(item.idMeal - randomSubtraction, item.strMealThumb, item.strMeal)}>Add to cart</span></p>
+                                <p style={{ marginLeft: '10px', color: 'black' }}>₹ {item.idMeal - randomSubtraction}<span className='addtocartpro' onClick={() => addCart(item.idMeal - randomSubtraction, item.strMealThumb, item.strMeal)}>Add to cart</span></p>
                             </div>
                         ))}
                     </div>
                 </div> : <div></div>
             }
 
+            {/* Add to cart */}
             {
                 datas.addclick ?
                     <>
@@ -344,7 +354,7 @@ function FoodFront() {
                                         <div className="box-content">
                                             <h3 className="box-title">{item.name}</h3>
                                         </div>
-                                        <p className='rs' >₹ {item.price * item.count}<span className='dec'  onClick={() => decre(index)}>-</span><span className='cou' >{item.count}</span><span className='inc'  onClick={() => increment(index)}>+</span> <span className='can'  onClick={() => cancelorder(index)}>Cancel</span></p>
+                                        <p className='rs' >₹ {item.price * item.count}<span className='dec' onClick={() => decre(index)}>-</span><span className='cou' >{item.count}</span><span className='inc' onClick={() => increment(index)}>+</span> <span className='can' onClick={() => cancelorder(index)}>Cancel</span></p>
 
                                     </div>
                                 ))}
@@ -380,7 +390,7 @@ function FoodFront() {
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <p style={{display:'flex',justifyContent:'flex-end'}}><span style={{  backgroundColor: "#FFA500",padding: "5px"}}>Order Now</span></p>
+                                    <p style={{ display: 'flex', justifyContent: 'flex-end' }}><span style={{ backgroundColor: "#FFA500", padding: "5px" }}>Order Now</span></p>
                                 </div>
 
                             </div>
